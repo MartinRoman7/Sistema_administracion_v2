@@ -18,10 +18,12 @@
         "express-messages": "*",
         "express-session": "*",
         "express-validator": "*",
+        "handlebars": "^4.0.12",
         "mongodb": "*",
         "mongoose": "*",
         "passport": "*",
         "passport-http": "*",
-        "passport-local": "*"
+        "passport-local": "*",
+        "slack-node": "^0.1.8"
     }
 }

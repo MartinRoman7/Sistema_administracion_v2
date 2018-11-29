@@ -10,6 +10,12 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var mongo = require('mongodb');
 var mongoose = require('mongoose');
+var Slack = require('slack-node');
+
+// Notificaciones Slack
+webhookUri = "https://hooks.slack.com/services/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";
+slack = new Slack();
+slack.setWebhook(webhookUri);
 
 mongoose.connect('mongodb://mongodb:FundacionCSMongoDB@localhost:27017/system_admin', { useNewUrlParser: true });
 mongoose.set('useCreateIndex', true);
@@ -17,6 +23,9 @@ var db = mongoose.connection;
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
+var qrcodes = require('./routes/qrcodes');
+var administradores = require('./routes/admins');
+var apis = require('./routes/apis');
 
 // Init App
 var app = express();
@@ -79,6 +88,9 @@ app.use(function(req, res, next) {
 
 app.use('/', routes);
 app.use('/users', users);
+app.use('/qrcodes', qrcodes);
+app.use('/administrador', administradores);
+app.use('/api/v1', apis);
 
 // Set Port
 app.set('port', (process.env.PORT || 3000));

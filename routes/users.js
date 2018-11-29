@@ -2,12 +2,16 @@ const express = require('express');
 const router = express.Router();
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
+const Slack = require('slack-node');
 
+webhookUri = "https://hooks.slack.com/services/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";
+slack = new Slack();
+slack.setWebhook(webhookUri);
 
 const User = require('../models/user')
 
 // Página de registro
-router.get('/registro', (req, res) => {
+router.get('/registro', ensureAuthenticated, (req, res) => {
     res.render('register');
 });
 
@@ -17,7 +21,7 @@ router.get('/login', (req, res) => {
 });
 
 // Registro de usuario
-router.post('/registro', (req, res) => {
+router.post('/registro', ensureAuthenticated, (req, res) => {
 
     // Obtener los datos ingresados
     var id = req.body;
@@ -39,6 +43,8 @@ router.post('/registro', (req, res) => {
 
     var errors = req.validationErrors();
 
+    console.log(errors);
+
     // Si hay errores muestralos en el layout
     if (errors) {
         res.render('register', {
@@ -58,8 +64,14 @@ router.post('/registro', (req, res) => {
         });
 
         req.flash('success_msg', 'Registro éxitoso');
-
         res.redirect('/users/login');
+
+        slack.webhook({
+            channel: "aws-iot-fundacion",
+            text: "El usuario " + name + " se ha registrado en la base de datos.",
+        }, function(err, response) {
+        console.log(response);
+        });
 
     }
 
@@ -71,7 +83,7 @@ passport.use(new LocalStrategy(
         User.getUserByUsername(username, function(err, user) {
             if (err) throw err;
             if (!user) {
-                return done(null, false, { message: 'Usuario invalido' });
+                return done(null, false, { message: 'Usuario inválido' });
             }
 
             User.comparePassword(password, user.password, function(err, isMatch) {
@@ -79,7 +91,7 @@ passport.use(new LocalStrategy(
                 if (isMatch) {
                     return done(null, user);
                 } else {
-                    return done(null, false, { message: 'Contraseña invalida' });
+                    return done(null, false, { message: 'Contraseña inválida' });
                 }
             });
         });
@@ -108,6 +120,15 @@ router.get('/logout', (req, res) => {
     req.flash('success_msg', 'Se ha cerrado sesión');
 
     res.redirect('/users/login');
-})
+});
+
+function ensureAuthenticated(req, res, next) {
+    if (req.isAuthenticated()) {
+        return next();
+    } else {
+        //req.flash('error_msg', 'No estás logeado');
+        res.redirect('/users/login');
+    }
+}
 
 module.exports = router;

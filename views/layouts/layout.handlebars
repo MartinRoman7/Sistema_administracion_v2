@@ -8,38 +8,24 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
-
     <title>Sistema de administración</title>
 
     <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="/css/bootstrap.min.css" rel="stylesheet">
+    
 
     <!-- Custom styles for this template -->
     <link href="/css/full-width-pics.css" rel="stylesheet">
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <!-- Bootstrap core buttons CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">    
 
-    <script>
-        function validateData() {
-            var x = document.forms["Access"]["codigo"].value;
-            if (x == "" || y == "") {
-                alert("El campo debe tener valor");
-                return false;
-            }
-        }
-    </script>
+    <!-- Script para lectura de código QR -->
+    <script type="text/javascript" src="/js/instascan.min.js"></script>
 
+    <!-- Style de menú -->
     <style>
-        .btn-link {
-            color: #B8B9BA;
-        }
-        
-        .btn-link:hover {
-            color: #E8EEF4;
-            background-color: #427BB4;
-        }
         a:link,
         a:visited {
             color: #B8B9BA;
@@ -59,6 +45,8 @@
         }
     </style>
 
+
+
 </head>
 <body>
 
@@ -71,19 +59,23 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto">
+                    <!-- {{#unless user}}
+                    <li class="nav-item">
+                        <a href="/users/login">Iniciar Sesión</a>
+                    </li>
+                    {{/unless}} -->
                     {{#if user}}
                     <li class="nav-item">
                         <a href="/">Home</a>
                     </li>
-                    {{/if}}
-                    {{#unless user}}
                     <li class="nav-item">
-                        <a href="/users/login">Ingresar</a>
+                        <a href="/administrador">Administrador</a>
                     </li>
-                    {{/unless}}
-                    {{#if user}}
                     <li class="nav-item">
-                        <a href="/users/registro">Registro</a>
+                        <a href="/qrcodes">Lectura QR</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/users/registro">Registrarse</a>
                     </li>
                     <li class="nav-item">
                         <a href="/users/logout">Cerrar Sesión</a>
@@ -102,7 +94,8 @@
 
             <div class="col-xs-6 col-sm-12 col-lg-12">
                 <!-- <div class="inicio-sesion">-->
-                <div class="bottom-buffer" style="margin-left: 8px; margin-top: 50px;">
+                <div class="bottom-buffer" style="margin-left: 8px; margin-top: 30px;">
+                    
                     {{{body}}}
                     
                     <div class="row" id="divMsgError" style="margin-top: 20px;">
@@ -142,6 +135,276 @@
     <!-- Bootstrap core JavaScript -->
     <script src="/jquery/jquery.min.js"></script>
     <script src="/js/bootstrap.bundle.min.js"></script>
+
+        <!-- Script de asignación de dispositivo -->
+    <script>
+        var estado;
+        var municipio;
+        var jurisdiccion;
+        var localidad;
+        var unidad;
+        var clues;
+        var codigo;
+
+        $(document).ready(function(){
+
+            //////////////////////////////////////////////////////////////////////////////
+
+            $("a#estado").click(function(){
+                //$("div#first_municipio").hide();
+                $("div#second_municipio").show();
+                //$("div#first_jurisdiccion").hide();
+                $("div#second_jurisdiccion").show();
+                $("div#title_municipio").show();
+                $("div#title_jurisdiccion").show();
+                
+                estado = $(this).attr("value");
+                console.log(estado);
+                
+                $("h4#estado_text").html(estado.toLowerCase());
+                $("ul#second_municipio_inserted").empty();
+                $("ul#second_jurisdiccion_inserted").empty();
+
+
+                $.getJSON("http://localhost:3000/api/v1/database/estado/municipio/"+estado, function(data){
+                    $.each(data, function (index, value) {
+                        console.log(value._id.Municipio);
+                        $("ul#second_municipio_inserted").append("<li><a id=\"second_municipio_selected\" value=\""+value._id.Municipio+"\" class=\"dropdown-item\">"+value._id.Municipio+"</a></li>"); 
+                    });
+
+                        $("a#second_municipio_selected").click(function(){
+            
+                            municipio = $(this).attr("value");
+                            console.log(municipio);
+                            
+                            $("h4#municipio_text").html(municipio.toLowerCase());
+                            $("ul#second_jurisdiccion_inserted").empty();
+                            //$("ul#second_localidad_inserted").empty();
+                            //$("div#title_localidad").show();
+                            //$("div#second_localidad").show();
+
+                            $.getJSON("http://localhost:3000/api/v1/database/municipio/jurisdiccion/"+municipio, function(data){
+                                $.each(data, function (index, value) {
+                                    console.log(value._id.Jurisdiccion);
+                                    $("ul#second_jurisdiccion_inserted").append("<li><a id=\"second_jurisdiccion_selected\" value=\""+value._id.Jurisdiccion+"\" class=\"dropdown-item\">"+value._id.Jurisdiccion+"</a></li>");
+                                });
+                                
+                                    $("a#second_jurisdiccion_selected").click(function(){
+                    
+                                        jurisdiccion = $(this).attr("value");
+                                        console.log(jurisdiccion);
+                    
+                                        $("h4#jurisdiccion_text").html(jurisdiccion.toLowerCase());
+                                        $("ul#second_localidad_inserted").empty();
+
+                                        $.getJSON("http://localhost:3000/api/v1/database/jurisdiccion-municipio/localidad/"+jurisdiccion+"&"+municipio, function(data){
+                                            $.each(data, function (index, value) {
+                                                console.log(value._id.Localidad);
+                                                $("ul#second_localidad_inserted").append("<li><a id=\"second_localidad_selected\" value=\""+value._id.Localidad+"\" class=\"dropdown-item\">"+value._id.Localidad+"</a></li>");
+                                            });
+                                                
+                                                $("div#title_localidad").show();
+                                                $("div#second_localidad").show();
+                                                $("div#second_municipio").hide();
+                                                $("div#second_jurisdiccion").hide();
+
+                                                $("a#second_localidad_selected").click(function(){
+                                                    localidad = $(this).attr("value");
+                                                    console.log(localidad);
+                                                    
+                                                    $("h4#localidad_text").html(localidad.toLowerCase());
+                                                    $("ul#second_us_inserted").empty();
+                                                    $("ul#second_clues_inserted").empty();
+
+                                                    $.getJSON("http://localhost:3000/api/v1/database/jurisdiccion-municipio-localidad/us-clues/"+jurisdiccion+"&"+municipio+"&"+localidad, function(data){
+                                                        $.each(data, function (index, value) {
+                                                            console.log("unidad API: "+value._id.Unidad);
+                                                            console.log("clues API: "+value._id.CLUES);
+                                                            $("ul#second_us_inserted").append("<li><a id=\"second_us_selected\" value=\""+value._id.Unidad+"\" class=\"dropdown-item\">"+value._id.Unidad+"</a></li>");
+                                                            $("ul#second_clues_inserted").append("<li><a id=\"second_clues_selected\" value=\""+value._id.CLUES+"\" class=\"dropdown-item\">"+value._id.CLUES+"</a></li>");
+                                                        });
+
+                                                        $("div#title_us").show();
+                                                        $("div#second_us").show();
+                                                        $("div#title_clues").show();
+                                                        $("div#second_clues").show();
+                                                        $("div#second_localidad").hide();
+
+                                                        $("a#second_us_selected").click(function(){
+                                                            unidad = $(this).attr("value");
+                                                            console.log("Click unidad: "+unidad);
+
+                                                            $("h4#us_text").html(unidad.toLowerCase());
+
+                                                            $.getJSON("http://localhost:3000/api/v1/database/jurisdiccion-municipio-localidad/us-clues/"+jurisdiccion+"&"+municipio+"&"+localidad, function(data){
+                                                                $.each(data, function (index, value) {
+                                                                    if( value._id.Unidad == unidad){
+                                                                        console.log(value._id.CLUES);
+                                                                        clues = value._id.CLUES;
+                                                                        $("h4#clues_text").html(value._id.CLUES.toLowerCase());
+                                                                    }
+                                                                });
+                                                                $("div#second_us").hide();
+                                                                $("div#second_clues").hide();
+                                                            });
+                                                        });
+
+                                                        $("a#second_clues_selected").click(function(){
+                                                            clues = $(this).attr("value");
+                                                            console.log(clues);
+
+                                                            $("h4#clues_text").html(clues.toLowerCase());
+
+                                                            $.getJSON("http://localhost:3000/api/v1/database/jurisdiccion-municipio-localidad/us-clues/"+jurisdiccion+"&"+municipio+"&"+localidad, function(data){
+                                                                $.each(data, function (index, value) {
+                                                                    if( value._id.CLUES == clues){
+                                                                        console.log(value._id.Unidad);
+                                                                        unidad = value._id.Unidad;
+                                                                        $("h4#us_text").html(value._id.Unidad.toLowerCase());
+                                                                    }
+                                                                });
+                                                                $("div#second_us").hide();
+                                                                $("div#second_clues").hide();
+                                                            });
+                                                        });
+                                                    });
+                                                });
+                                        });
+                                    });
+                            });
+                        });   
+                });
+
+                $.getJSON("http://localhost:3000/api/v1/database/estado/jurisdiccion/"+estado, function(data){
+                    $.each(data, function (index, value) {
+                        console.log(value._id.Jurisdiccion);
+                        $("ul#second_jurisdiccion_inserted").append("<li><a id=\"second_jurisdiccion_selected\" value=\""+value._id.Jurisdiccion+"\" class=\"dropdown-item\">"+value._id.Jurisdiccion+"</a></li>"); 
+                    });
+
+                        $("a#second_jurisdiccion_selected").click(function(){
+                
+                            jurisdiccion = $(this).attr("value");
+                            console.log(jurisdiccion);
+
+                            $("h4#jurisdiccion_text").html(jurisdiccion.toLowerCase());
+                            $("ul#second_municipio_inserted").empty();
+
+                            $.getJSON("http://localhost:3000/api/v1/database/jurisdiccion/municipio/"+jurisdiccion, function(data){
+                                $.each(data, function (index, value) {
+                                    console.log(value._id.Municipio);
+                                    $("ul#second_municipio_inserted").append("<li><a id=\"second_municipio_selected\" value=\""+value._id.Municipio+"\" class=\"dropdown-item\">"+value._id.Municipio+"</a></li>");   
+                                });
+                                
+                                    $("a#second_municipio_selected").click(function(){
+                        
+                                        municipio = $(this).attr("value");
+                                        console.log(municipio);
+
+                                        $("h4#municipio_text").html(municipio.toLowerCase());
+                                        $("ul#second_localidad_inserted").empty();
+
+                                        $.getJSON("http://localhost:3000/api/v1/database/jurisdiccion-municipio/localidad/"+jurisdiccion+"&"+municipio, function(data){
+                                            $.each(data, function (index, value) {
+                                                console.log(value._id.Localidad);
+                                                $("ul#second_localidad_inserted").append("<li><a id=\"second_localidad_selected\" value=\""+value._id.Localidad+"\" class=\"dropdown-item\">"+value._id.Localidad+"</a></li>");
+                                            });
+                                                
+                                                $("div#title_localidad").show();
+                                                $("div#second_localidad").show();
+                                                $("div#second_municipio").hide();
+                                                $("div#second_jurisdiccion").hide();
+
+                                                $("a#second_localidad_selected").click(function(){
+                                                    localidad = $(this).attr("value");
+                                                    console.log(localidad);
+                                                    
+                                                    $("h4#localidad_text").html(localidad.toLowerCase());
+                                                    $("ul#second_us_inserted").empty();
+                                                    $("ul#second_clues_inserted").empty();
+
+                                                    $.getJSON("http://localhost:3000/api/v1/database/jurisdiccion-municipio-localidad/us-clues/"+jurisdiccion+"&"+municipio+"&"+localidad, function(data){
+                                                        $.each(data, function (index, value) {
+                                                            console.log(value._id.Unidad);
+                                                            console.log(value._id.CLUES);
+                                                            $("ul#second_us_inserted").append("<li><a id=\"second_us_selected\" value=\""+value._id.Unidad+"\" class=\"dropdown-item\">"+value._id.Unidad+"</a></li>");
+                                                            $("ul#second_clues_inserted").append("<li><a id=\"second_clues_selected\" value=\""+value._id.CLUES+"\" class=\"dropdown-item\">"+value._id.CLUES+"</a></li>");
+                                                        });
+
+                                                        $("div#title_us").show();
+                                                        $("div#second_us").show();
+                                                        $("div#title_clues").show();
+                                                        $("div#second_clues").show();
+                                                        $("div#second_localidad").hide();
+
+                                                        $("a#second_us_selected").click(function(){
+                                                            unidad = $(this).attr("value");
+                                                            console.log(unidad);
+
+                                                            $("h4#us_text").html(unidad.toLowerCase());
+
+                                                            $.getJSON("http://localhost:3000/api/v1/database/jurisdiccion-municipio-localidad/us-clues/"+jurisdiccion+"&"+municipio+"&"+localidad, function(data){
+                                                                $.each(data, function (index, value) {
+                                                                    if( value._id.Unidad == unidad){
+                                                                        console.log(value._id.CLUES);
+                                                                        clues = value._id.CLUES;
+                                                                        $("h4#clues_text").html(value._id.CLUES.toLowerCase());
+                                                                    }
+                                                                });
+                                                                $("div#second_us").hide();
+                                                                $("div#second_clues").hide();
+                                                            });
+                                                        });
+
+                                                        $("a#second_clues_selected").click(function(){
+                                                            clues = $(this).attr("value");
+                                                            console.log(clues);
+
+                                                            $("h4#clues_text").html(clues.toLowerCase());
+
+                                                            $.getJSON("http://localhost:3000/api/v1/database/jurisdiccion-municipio-localidad/us-clues/"+jurisdiccion+"&"+municipio+"&"+localidad, function(data){
+                                                                $.each(data, function (index, value) {
+                                                                    if( value._id.CLUES == clues){
+                                                                        console.log(value._id.Unidad);
+                                                                        unidad = value._id.Unidad;
+                                                                        $("h4#us_text").html(value._id.Unidad.toLowerCase());
+                                                                    }
+                                                                });
+                                                                $("div#second_us").hide();
+                                                                $("div#second_clues").hide();
+                                                            });
+                                                        });
+
+                                                    });
+                                                });
+                                        });
+                                    });
+                            });
+                        });
+                });  
+            });
+
+            ////////////////////////////////////////////////////////////////////////////////
+
+            $("#btn-send").click(function(){
+                codigo = $("#codigo_text").attr("value");
+                console.log(codigo);
+                console.log(estado);
+                $.post("https://cadena-de-frio.fcs-dev.net/configuracion-actualizada",
+                {
+                    estado: estado,
+                    municipio: municipio,
+                    jurisdiccion: jurisdiccion,
+                    localidad: localidad,
+                    unidad: unidad,
+                    clues: clues,
+                    codigo: codigo
+                });
+                alert("Datos actualizados");
+            });
+        });
+
+    </script>
+
 
 </body>
 </html>
