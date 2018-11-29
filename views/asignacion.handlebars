@@ -3,13 +3,12 @@
     
     <div class="row">
         <div class="col-xs-6 col-sm-12 col-lg-12">
-                <!-- <div class="inicio-sesion">-->
             <div class="bottom-buffer" style="margin-left: 8px; margin-top: 50px;">
                     <h2>Asignación</h2>
             </div>
               
-        <div class="jumbotron jumbotron-fluid" style="margin-top: 50px;">
-            <div class="container">         
+            <div class="jumbotron jumbotron-fluid" style="margin-top: 50px;">
+                <div class="container">         
                     <h3 id="codigo_text" value="{{ codigos }}" style="text-align:center;">{{ codigos }}</h3>
                     <hr class="my-4">
                     <div class="bottom-buffer" style="margin-left: 50px; margin-top: -10px; margin-right: 50px;">
@@ -38,16 +37,6 @@
                         <div class="form-group">
                             <div id="title_municipio" style="display:none"><h4 class="config_options">Municipio: <h4 id="municipio_text"></h4></h4></div>
                             <div class="combo_fields">
-                                <!-- <div id="first_municipio" class="btn-group btn-lg btn-block" role="group" style="display:none">
-                                    <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle  btn-block" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Seleccione
-                                    </button>
-                                    <ul class="dropdown-menu scrollable-menu" role="menu">    
-                                        <% for(var i=0; i<municipios.length; i++) {%>
-                                            <li><a id="municipio_selected" value="<%= municipios[i]._id %>" class="dropdown-item"><%= municipios[i]._id %></a></li>
-                                        <% } %>
-                                    </ul>
-                                </div> -->
                                 <div id="second_municipio" class="btn-group btn-lg btn-block" role="group" style="display:none">
                                     <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle  btn-block" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         Seleccione
@@ -63,16 +52,6 @@
                         <div class="form-group">
                             <div id="title_jurisdiccion" style="display:none"><h4 class="config_options">Jurisdicción: <h4 id="jurisdiccion_text"></h4></h4></div>
                             <div class="combo_fields">
-                                <!-- <div id="first_jurisdiccion" class="btn-group btn-lg btn-block" role="group" style="display:none">
-                                    <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle  btn-block" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Seleccione
-                                    </button>
-                                    <ul class="dropdown-menu scrollable-menu" role="menu">    
-                                        <% for(var i=0; i<jurisdicciones.length; i++) {%>
-                                            <li><a id="jurisdiccion_selected" value="<%= jurisdicciones[i]._id %>" class="dropdown-item"><%= jurisdicciones[i]._id %></a></li>
-                                        <% } %>
-                                    </ul>
-                                </div> -->
                                 <div id="second_jurisdiccion" class="btn-group btn-lg btn-block" role="group" style="display:none">
                                     <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle  btn-block" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         Seleccione
@@ -88,16 +67,6 @@
                         <div class="form-group">
                             <div id="title_localidad" style="display:none"><h4 class="config_options">Localidad: <h4 id="localidad_text"></h4></h4></div>
                             <div class="combo_fields">
-                                <!-- <div id="first_localidad" class="btn-group btn-lg btn-block" role="group" style="display:none">
-                                    <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle  btn-block" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Seleccione
-                                    </button>
-                                    <ul class="dropdown-menu scrollable-menu" role="menu">    
-                                        <% for(var i=0; i<localidades.length; i++) {%>
-                                            <li><a id="localidad_selected" value="<%= localidades[i]._id %>" class="dropdown-item"><%= localidades[i]._id %></a></li>
-                                        <% } %>
-                                    </ul>
-                                </div> -->
                                 <div id="second_localidad" class="btn-group btn-lg btn-block" role="group" style="display:none">
                                     <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle  btn-block" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         Seleccione
@@ -113,16 +82,6 @@
                     <div class="form-group">
                         <div id="title_us" style="display:none"><h4 class="config_options">Unidad de salud: <h4 id="us_text"></h4></h4></div>
                         <div class="combo_fields">
-                            <!-- <div id="first_us" class="btn-group btn-lg btn-block" role="group" style="display:none">
-                                <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle  btn-block" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Seleccione
-                                </button>
-                                <ul class="dropdown-menu scrollable-menu" role="menu">    
-                                    <% for(var i=0; i<localidades.length; i++) {%>
-                                        <li><a id="localidad_selected" value="<%= localidades[i]._id %>" class="dropdown-item"><%= localidades[i]._id %></a></li>
-                                    <% } %>
-                                </ul>
-                            </div> -->
                             <div id="second_us" class="btn-group btn-lg btn-block" role="group" style="display:none">
                                 <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle  btn-block" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     Seleccione
@@ -138,16 +97,6 @@
                     <div class="form-group">
                         <div id="title_clues" style="display:none"><h4 class="config_options">CLUES: <h4 id="clues_text"></h4></h4></div>
                         <div class="combo_fields">
-                            <!-- <div id="first_clues" class="btn-group btn-lg btn-block" role="group" style="display:none">
-                                <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle  btn-block" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Seleccione
-                                </button>
-                                <ul class="dropdown-menu scrollable-menu" role="menu">    
-                                    <% for(var i=0; i<localidades.length; i++) {%>
-                                        <li><a id="localidad_selected" value="<%= localidades[i]._id %>" class="dropdown-item"><%= localidades[i]._id %></a></li>
-                                    <% } %>
-                                </ul>
-                            </div> -->
                             <div id="second_clues" class="btn-group btn-lg btn-block" role="group" style="display:none">
                                 <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle  btn-block" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     Seleccione
@@ -160,19 +109,6 @@
 
                     <!-- //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
 
-
-
-                        <!-- <div class="form-group">
-                            <h4 class="config_options">Jurisdicción:</h4>
-                            <div class="combo_fields">
-                                <select class="select_config">
-                                    <% for(var i=0; i<jurisdicciones.length; i++) {%>
-                                    <option><%= jurisdicciones[i]._id %></option>
-                                    <% } %>
-                                </select>
-                            </div>
-                        </div> -->
-
                         <div class="clearfix">
                             <div class="pull-right">
                                 <input id="btn-send" class="btn btn-success" type="submit" value="Aceptar" style="float: right; margin-top: 70px; margin-bottom: -30px;">
@@ -181,16 +117,12 @@
 
                         <div id="btn-continue" class="clearfix" style="display:none">
                             <div class="pull-right">
-                              <a class="continueA" href="/administrador/configuracion/{{ codigos }}" >Continuar</a>
+                                <a class="continueA" href="/administrador/configuracion/{{ codigos }}" >Continuar</a>
                             </div>
                         </div>
-
                     </div>
-                <!-- </form> -->
+                </div>
             </div>
-        </div>
-
-
         </div>
     </div>
 </div>    

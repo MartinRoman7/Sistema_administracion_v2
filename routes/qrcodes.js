@@ -42,7 +42,7 @@ router.get('/:id', ensureAuthenticated, (req, res) => {
         text: "El identificador " + id + " se ha rechazado ya que existe en la base de datos.",
       }, function(err, response) {
         console.log(response);
-	console.log(err);
+	      console.log(err);
       });
     }
   });
@@ -52,7 +52,6 @@ function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated()) {
       return next();
   } else {
-      //req.flash('error_msg', 'No estás logeado');
       res.redirect('/users/login');
   }
 }

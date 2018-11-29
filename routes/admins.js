@@ -17,9 +17,6 @@ router.get('/', ensureAuthenticated, (req, res) => {
 });
 
 router.post('/search', ensureAuthenticated, (req, res) => {
-    //var id = req.url;
-    //console.log(id);
-    //var codigo_clear = id.replace('/search?codigoSearch=','');
     var codigo_clear = req.body.codigoSearch;
 
     Admins.searchCode({codigo: codigo_clear}, (err, result) => {
@@ -96,8 +93,6 @@ router.post('/asignacion', ensureAuthenticated, (req, res) => {
 router.get('/configuracion/:id', ensureAuthenticated, (req, res) => {
     var params = req.params.id;
     console.log("params: "+params);
-    /*var url = req.url;
-    console.log("url: "+url);*/
     res.render('configuracion');
 
     
@@ -107,7 +102,6 @@ function ensureAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {
         return next();
     } else {
-        //req.flash('error_msg', 'No estás logeado');
         res.redirect('/users/login');
     }
 }
