@@ -26,20 +26,23 @@ router.get('/:id', ensureAuthenticated, (req, res) => {
     console.log(device);
     if(device === null){
       Device.insertDevice(newDevice, (err, out) => {
-        slack.webhook({
+       console.log(out);
+       slack.webhook({
           channel: "aws-iot-fundacion",
           text: "El identificador " + id + " se ha registrado en la base de datos.",
         }, function(err, response) {
           console.log(response);
+          console.log(err);
         });
-        console.log(out);
       });
+
     } else{
       slack.webhook({
         channel: "aws-iot-fundacion",
         text: "El identificador " + id + " se ha rechazado ya que existe en la base de datos.",
       }, function(err, response) {
         console.log(response);
+	console.log(err);
       });
     }
   });

@@ -5,7 +5,7 @@ const url = "mongodb://mongodb:FundacionCSMongoDB@localhost:27017/system_admin"
 
 
 // Estado - Jurisdicción
-router.get('/database/estado/jurisdiccion/:id', ensureAuthenticated, (req, res) => {
+router.get('/database/estado/jurisdiccion/:id', (req, res) => {
 
     let id = req.params.id;
   
@@ -24,7 +24,7 @@ router.get('/database/estado/jurisdiccion/:id', ensureAuthenticated, (req, res) 
   });
   
   // Estado - Municipios
-  router.get('/database/estado/municipio/:id', ensureAuthenticated, (req, res) => {
+  router.get('/database/estado/municipio/:id', (req, res) => {
   
     let id = req.params.id;
   
@@ -43,7 +43,7 @@ router.get('/database/estado/jurisdiccion/:id', ensureAuthenticated, (req, res) 
   });
   
   // Jurisdicción - Municipios
-  router.get('/database/jurisdiccion/municipio/:id', ensureAuthenticated, (req, res) => {
+  router.get('/database/jurisdiccion/municipio/:id', (req, res) => {
   
     let id = req.params.id;
   
@@ -62,7 +62,7 @@ router.get('/database/estado/jurisdiccion/:id', ensureAuthenticated, (req, res) 
   });
   
   // Jurisdicción - Localidades
-  router.get('/database/jurisdiccion/localidad/:id', ensureAuthenticated, (req, res) => {
+  router.get('/database/jurisdiccion/localidad/:id', (req, res) => {
   
     let id = req.params.id;
   
@@ -81,7 +81,7 @@ router.get('/database/estado/jurisdiccion/:id', ensureAuthenticated, (req, res) 
   });
   
   // Municipio - Jurisdicción
-  router.get('/database/municipio/jurisdiccion/:id', ensureAuthenticated, (req, res) => {
+  router.get('/database/municipio/jurisdiccion/:id', (req, res) => {
   
     let id = req.params.id;
   
@@ -100,7 +100,7 @@ router.get('/database/estado/jurisdiccion/:id', ensureAuthenticated, (req, res) 
   });
   
   // Municipio - Localidades
-  router.get('/database/municipio/localidad/:id', ensureAuthenticated, (req, res) => {
+  router.get('/database/municipio/localidad/:id', (req, res) => {
   
     let id = req.params.id;
   
@@ -119,7 +119,7 @@ router.get('/database/estado/jurisdiccion/:id', ensureAuthenticated, (req, res) 
   });
   
   // Jurisdicción, Muncipio - Localidades
-  router.get('/database/jurisdiccion-municipio/localidad/:juris&:mun', ensureAuthenticated, (req, res) => {
+  router.get('/database/jurisdiccion-municipio/localidad/:juris&:mun', (req, res) => {
   
     let jurisdiccion = req.params.juris;
     let municipio = req.params.mun;
@@ -139,7 +139,7 @@ router.get('/database/estado/jurisdiccion/:id', ensureAuthenticated, (req, res) 
   });
   
   // Jurisdicción, Muncipio, Localidad - Unidad de Salud, CLUES
-  router.get('/database/jurisdiccion-municipio-localidad/us-clues/:juris&:mun&:loc', ensureAuthenticated, (req, res) => {
+  router.get('/database/jurisdiccion-municipio-localidad/us-clues/:juris&:mun&:loc', (req, res) => {
   
     let jurisdiccion = req.params.juris;
     let municipio = req.params.mun;
@@ -162,13 +162,13 @@ router.get('/database/estado/jurisdiccion/:id', ensureAuthenticated, (req, res) 
 
 
 
-function ensureAuthenticated(req, res, next) {
+/*function ensureAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {
         return next();
     } else {
         //req.flash('error_msg', 'No estás logeado');
         res.redirect('/users/login');
     }
-}
+}*/
 
   module.exports = router;

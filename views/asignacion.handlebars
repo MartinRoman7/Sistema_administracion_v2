@@ -10,7 +10,7 @@
               
         <div class="jumbotron jumbotron-fluid" style="margin-top: 50px;">
             <div class="container">         
-                    <h3 id="codigo_text" value="<%= id_codigos %>" style="text-align:center;">{{ codigos }}</h3>
+                    <h3 id="codigo_text" value="{{ codigos }}" style="text-align:center;">{{ codigos }}</h3>
                     <hr class="my-4">
                     <div class="bottom-buffer" style="margin-left: 50px; margin-top: -10px; margin-right: 50px;">
                         
@@ -178,6 +178,13 @@
                                 <input id="btn-send" class="btn btn-success" type="submit" value="Aceptar" style="float: right; margin-top: 70px; margin-bottom: -30px;">
                             </div>
                         </div>
+
+                        <div id="btn-continue" class="clearfix" style="display:none">
+                            <div class="pull-right">
+                              <a class="continueA" href="/administrador/configuracion/{{ codigos }}" >Continuar</a>
+                            </div>
+                        </div>
+
                     </div>
                 <!-- </form> -->
             </div>

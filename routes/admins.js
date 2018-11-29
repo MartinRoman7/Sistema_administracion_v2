@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const MongoClient = require('mongodb').MongoClient;
-const url = "mongodb://mongodb:FundacionCSMongoDB@localhost:27017/system_admin"
+const url = "mongodb://mongodb:FundacionCSMongoDB@138.68.47.27:27017/system_admin"
 
 const Admins = require('../models/admin');
 
@@ -60,6 +60,47 @@ router.get('/asignacion', ensureAuthenticated, (req, res) => {
           }
         });
         });
+});
+
+router.post('/asignacion', ensureAuthenticated, (req, res) => {
+    let body = req.body;
+    console.log(body);
+
+    let estado = body.estado;
+    let municipio = body.municipio;
+    let jurisdiccion = body.jurisdiccion;
+    let localidad = body.localidad;
+    let unidad = body.unidad;
+    let clues = body.clues;
+    let codigo = body.codigo;
+
+    MongoClient.connect(url, function(err, client) {
+        if (err) throw err;
+        var dbo = client.db("system_admin");
+        
+        var myquery = { codigo: codigo };
+        var newvalues = { $set: { estado: estado, municipio: municipio, jurisdiccion: jurisdiccion, localidad: localidad, unidad: unidad, clues: clues } };
+    
+        dbo.collection("devices").updateOne(myquery, newvalues, function(err, result) {
+        if (err) throw err;
+        else{
+          console.log(result);
+          res.redirect('/admin');
+          }
+        });
+        client.close();
+      });
+
+});
+
+router.get('/configuracion/:id', ensureAuthenticated, (req, res) => {
+    var params = req.params.id;
+    console.log("params: "+params);
+    /*var url = req.url;
+    console.log("url: "+url);*/
+    res.render('configuracion');
+
+    
 });
 
 function ensureAuthenticated(req, res, next) {

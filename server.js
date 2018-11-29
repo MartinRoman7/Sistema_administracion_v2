@@ -17,7 +17,7 @@ webhookUri = "https://hooks.slack.com/services/TC7BK7NBB/BDNKQLLLA/P34LGmgGzmgwM
 slack = new Slack();
 slack.setWebhook(webhookUri);
 
-mongoose.connect('mongodb://mongodb:FundacionCSMongoDB@localhost:27017/system_admin', { useNewUrlParser: true });
+mongoose.connect('mongodb://mongodb:FundacionCSMongoDB@138.68.47.27:27017/system_admin', { useNewUrlParser: true });
 mongoose.set('useCreateIndex', true);
 var db = mongoose.connection;
 
