@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 
 // Esquema de dispositivo
 var DeviceSchema = mongoose.Schema({
+    // Agregar apartado de cámara de frío
     codigo: {
         type: String,
         index: true

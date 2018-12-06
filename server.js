@@ -17,7 +17,8 @@ webhookUri = "https://hooks.slack.com/services/TC7BK7NBB/BDNKQLLLA/P34LGmgGzmgwM
 slack = new Slack();
 slack.setWebhook(webhookUri);
 
-mongoose.connect('mongodb://mongodb:FundacionCSMongoDB@138.68.47.27:27017/system_admin', { useNewUrlParser: true });
+//mongoose.connect('mongodb://mongodb:FundacionCSMongoDB@138.68.47.27:27017/system_admin', { useNewUrlParser: true });
+mongoose.connect('mongodb://mongodb:FundacionCSMongoDB@127.0.0.1:27017/system_admin', { useNewUrlParser: true });
 mongoose.set('useCreateIndex', true);
 var db = mongoose.connection;
 
@@ -26,6 +27,7 @@ var users = require('./routes/users');
 var qrcodes = require('./routes/qrcodes');
 var administradores = require('./routes/admins');
 var apis = require('./routes/apis');
+var manuals = require('./routes/manuals');
 
 // Init App
 var app = express();
@@ -91,6 +93,7 @@ app.use('/users', users);
 app.use('/qrcodes', qrcodes);
 app.use('/administrador', administradores);
 app.use('/api/v1', apis);
+app.use('/manuales', manuals);
 
 // Set Port
 app.set('port', (process.env.PORT || 3000));

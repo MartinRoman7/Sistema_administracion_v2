@@ -70,7 +70,7 @@ router.post('/registro', ensureAuthenticated, (req, res) => {
             channel: "aws-iot-fundacion",
             text: "El usuario " + name + " se ha registrado en la base de datos.",
         }, function(err, response) {
-        console.log(response);
+            console.log(response);
         });
 
     }
