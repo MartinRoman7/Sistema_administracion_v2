@@ -33,39 +33,50 @@
                     </div>
                 </div>  
 
-                <div class="bottom-buffer" style="margin-left: 8px; margin-top: 50px;">
-                        <h4>Ubicación de dispositivos</h4>
-                </div>
-                
-                <div class="bottom-buffer" style="margin-left: 8px; margin-top: 20px;">
-                    <table style="width:100%" align="center">
-                        <tr>
-                            <th>ID</th>
-                            <th>Código</th>
-                            <th>Estado</th>
-                            <th>Jurisdiccion</th>
-                            <th>Municipio</th>
-                            <th>Unidad</th>
-                            <th>CLUES</th>
-                            <th>Modificar</th>
-                        </tr>
-                        {{#each datas}}
-                        <tr>
-                            <td>{{ _id }}</td>
-                            <td>{{ codigo }}</td>
-                            <td>{{ estado }}</td>
-                            <td>{{ jurisdiccion }}</td>
-                            <td>{{ municipio }}</td>
-                            <td>{{ unidad }}</td>
-                            <td>{{ clues }}</td>
-                           <td>
-                                <form action="/administrador/asignacion" method="GET">
-                                    <button name="codigoTable" class="btn" value="{{ codigo }}"><i class="fa fa-home"></i></button>
-                                </form>
-                            </td>
-                        </tr>
-                        {{/each}}
-                    </table>
+                <div class="jumbotron jumbotron-fluid" style="margin-top: 20px;">
+                    <div class="container">
+
+                        <div class="bottom-buffer" style="margin-left: 8px;">
+                                <h4>Ubicación de dispositivos</h4>
+                        </div>
+                        
+                        <div class="bottom-buffer" style="margin-left: 8px; margin-right: 8px; margin-top: 20px;">
+                            <table style="width:100%" align="center">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Código</th>
+                                    <th>Estado</th>
+                                    <!-- <th>Jurisdiccion</th>
+                                    <th>Municipio</th> -->
+                                    <th>Unidad</th>
+                                    <th>CLUES</th>
+                                    <th>Modificar</th>
+                                    <th>Responsables</th>
+                                </tr>
+                                {{#each datas}}
+                                <tr>
+                                    <td>{{ _id }}</td>
+                                    <td>{{ codigo }}</td>
+                                    <td>{{ estado }}</td>
+                                    <!-- <td>{{ jurisdiccion }}</td>
+                                    <td>{{ municipio }}</td> -->
+                                    <td>{{ unidad }}</td>
+                                    <td>{{ clues }}</td>
+                                <td>
+                                        <form action="/administrador/asignacion" method="GET">
+                                            <button name="codigoTable" class="btn" value="{{ codigo }}"><i class="fa fa-home"></i></button>
+                                        </form>
+                                    </td>
+                                    <td>
+                                        <form action="/administrador/responsables" method="GET">
+                                            <button name="codigoTable" class="btn" value="{{ codigo }}"><i class="fa fa-address-book" aria-hidden="true"></i></button>
+                                        </form>
+                                    </td>
+                                </tr>
+                                {{/each}}
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

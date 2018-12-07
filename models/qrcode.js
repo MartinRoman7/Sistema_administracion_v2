@@ -26,6 +26,15 @@ var DeviceSchema = mongoose.Schema({
     unidad: {
         type: String
     }
+    /*
+    camara: {
+        type: String // Se debe indicar entre la selección de Unidad de Salud o Cámara de frío
+    },
+    config: {
+        type: String // Número que va a corresponder a la configuración seleccionada
+                     // con base en la selección de Unidad de Salud o Cámara de frío
+    }
+    */
 });
 
 var Device = module.exports = mongoose.model('Device', DeviceSchema);

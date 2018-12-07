@@ -4,6 +4,7 @@ const MongoClient = require('mongodb').MongoClient;
 const url = "mongodb://mongodb:FundacionCSMongoDB@127.0.0.1:27017/system_admin"
 
 const Admins = require('../models/admin');
+const Responsables = require('../models/responsable');
 
 router.get('/', ensureAuthenticated, (req, res) => {
 
@@ -111,9 +112,23 @@ router.get('/configuracion/:id', ensureAuthenticated, (req, res) => {
             res.render('configuracion-refrigerador');
         }
     });
+});
 
+router.get('/responsables', ensureAuthenticated, (req, res) => {
+    var id = req.url;
+    console.log(id);
+    var codigo = id.replace('/responsables?codigoTable=', '');
 
+    res.render('responsables', { codigos: codigo });
 
+});
+
+router.get('/responsables/agregar', ensureAuthenticated, (req, res) => {
+    var id = req.url;
+    console.log(id);
+    var codigo = id.replace('/responsables/agregar?codigoTable=', '');
+
+    res.render('register_respon', { codigos: codigo });
 
 });
 

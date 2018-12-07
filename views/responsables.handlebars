@@ -1,0 +1,59 @@
+<div class="container" style="width: 100%;" id="container">     
+    <ol id="breadcrumb" class="breadcrumb" hidden style="margin-left: 8px;"></ol>
+    
+    <div class="row">
+        <div class="col-xs-6 col-sm-12 col-lg-12">
+            <div class="bottom-buffer" style="margin-left: 8px; margin-top: 50px;">
+                    <h2>Responsables</h2>
+            
+
+                <form action="/administrador/responsables/agregar" method="GET" style="float: right;">
+                    <button name="codigoTable" class="btn btn-success" value="{{ codigos }}">Agregar</button>
+                </form>
+            </div>
+              
+            <div class="jumbotron jumbotron-fluid" style="margin-top: 80px;">
+                <div class="container">         
+                    <h3 id="codigo_text" value="{{ codigos }}" style="text-align:center;">{{ codigos }}</h3>
+                    <hr class="my-4">
+                    <div class="bottom-buffer" style="margin-left: 50px; margin-top: -10px; margin-right: 50px;">
+                        
+                        
+                
+                        <div class="bottom-buffer" style="margin-left: 8px; margin-top: 60px;">
+                            <table style="width:100%" align="center">
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Puesto</th>
+                                    <th>E-mail</th>
+                                    <!-- <th>Jurisdiccion</th>
+                                    <th>Municipio</th> -->
+                                    <th>Número móvil</th>
+                                    <th>Número fijo</th>
+                                    <th>Modificar</th>
+                                </tr>
+                                {{#each datas}}
+                                <tr>
+                                    <td>{{ _id }}</td>
+                                    <td>{{ codigo }}</td>
+                                    <td>{{ estado }}</td>
+                                    <!-- <td>{{ jurisdiccion }}</td>
+                                    <td>{{ municipio }}</td> -->
+                                    <td>{{ unidad }}</td>
+                                    <td>{{ clues }}</td>
+                                    <td>
+                                        <form action="/administrador/asignacion" method="GET">
+                                            <button name="codigoTable" class="btn" value="{{ codigo }}"><i class="fa fa-home"></i></button>
+                                        </form>
+                                    </td>
+                                </tr>
+                                {{/each}}
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>    
