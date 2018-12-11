@@ -71,7 +71,6 @@ td {
     cursor: pointer;
 }
 
-
 /* Darker background on mouse-over */
 
 .btn:hover {
@@ -134,6 +133,15 @@ td {
 #btnGroupDrop1 {
     width: 100%;
 }
+
+  
+/* Clearfix (clear floats) */
+.row-manuales::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+  
 
 @media only screen and (max-width: 400px) {
     body {

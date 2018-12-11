@@ -25,6 +25,9 @@ var DeviceSchema = mongoose.Schema({
     },
     unidad: {
         type: String
+    },
+    config: {
+        type: String
     }
     /*
     camara: {

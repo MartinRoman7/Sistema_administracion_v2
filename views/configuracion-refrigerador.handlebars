@@ -1,49 +1,48 @@
-<div class="container" style="width: 100%;" id="container">     
-    <ol id="breadcrumb" class="breadcrumb" hidden style="margin-left: 8px;"></ol>
-    
-    <div class="row">
-        <div class="col-xs-6 col-sm-12 col-lg-12">
-            <div class="bottom-buffer" style="margin-left: 8px; margin-top: 50px;">
-                    <h2>Configuración - refrigeradores</h2>
-            </div>
-              
-            <div class="jumbotron jumbotron-fluid" style="margin-top: 50px;">
-                <div class="container">         
-                    <div class="bottom-buffer" style="margin-left: 50px; margin-top: -10px; margin-right: 50px;">
+<head>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+</head>
 
-                        <div class="form-group">
-                            <div class="container"><h4>Configuración 1</h4></div>
-                            
-                                <div class="container">
-                                    <h6>Sistema de administración</h6>
-                                    <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                                </div>
-                                
-                                <div class="clearfix">
-                                    <div class="pull-right">
-                                        <a class="manual-ref01" href="/manuales/refrigerador/configuracion-01" target="_blank">Manual 1</a>
-                                    </div>
-                                </div>
-                        </div>
+<link rel="stylesheet" href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css">
 
-                        <div class="form-group">
-                            <div class="container"><h4>Configuración 2</h4></div>
-                            
-                                <div class="container">
-                                    <h6>Sistema de administración</h6>
-                                    <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                                </div>
-                                
-                                <div class="clearfix">
-                                    <div class="pull-right">
-                                        <a class="manual-ref02" href="/manuales/refrigerador/configuracion-02" target="_blank">Manual 2</a> 
-                                    </div>
-                                </div>
-                        </div>
+<div class="bottom-buffer" style="margin-left: 8px; margin-top: 70px;">
+    <h2>Configuración - refrigeradores</h2>
+</div>
 
-                    </div>
-                </div>
-            </div>
+<div class="jumbotron" style="margin-top: 50px;">
+    <div class="form-group"  style="margin-top: -20px;">
+        <div>
+            <h4>{{ codigos }}</h4>
+            <img class="manual-image" src="http://localhost:3000/rasp.png">
+        </div>
+        <div>    
+            <a class="material-icons mdc-icon-button mdc-card__action mdc-card__action--icon" href="/manuales/refrigerador/configuracion-01" target="_blank" title="Descargar manual">file_download</a>
+            <a class="manual-ref01" href="/administrador/configuracion/{{ codigos }}?configOption=1">Aceptar</a>
         </div>
     </div>
-</div>    
+</div>
+
+<div class="jumbotron" style="margin-top: 50px;">
+    <div class="form-group" style="margin-top: -20px;">
+        <div>
+            <h4>{{ codigos }}</h4>
+            <img class="manual-image" src="http://localhost:3000/rasp.png">
+        </div>
+        <div>    
+            <a class="material-icons mdc-icon-button mdc-card__action mdc-card__action--icon" href="/manuales/refrigerador/configuracion-01" target="_blank" title="Descargar manual">file_download</a>
+            <a class="manual-ref01" href="/administrador/configuracion/{{ codigos }}?configOption=2">Aceptar</a>
+        </div>
+    </div>
+</div>
+
+<div class="jumbotron" style="margin-top: 50px;">
+    <div class="form-group" style="margin-top: -20px;">
+        <div>
+            <h4>Title</h4>
+            <img class="manual-image" src="http://localhost:3000/rasp.png">
+        </div>
+        <div>    
+            <a class="material-icons mdc-icon-button mdc-card__action mdc-card__action--icon" href="/manuales/refrigerador/configuracion-01" target="_blank" title="Descargar manual">file_download</a>
+            <a class="manual-ref01" href="/administrador/configuracion/{{ codigos }}?configOption=3">Aceptar</a>
+        </div>
+    </div>
+</div>

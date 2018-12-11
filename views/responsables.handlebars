@@ -24,7 +24,7 @@
                             <table style="width:100%" align="center">
                                 <tr>
                                     <th>Nombre</th>
-                                    <th>Puesto</th>
+                                    <th>Cargo</th>
                                     <th>E-mail</th>
                                     <!-- <th>Jurisdiccion</th>
                                     <th>Municipio</th> -->
@@ -34,15 +34,15 @@
                                 </tr>
                                 {{#each datas}}
                                 <tr>
-                                    <td>{{ _id }}</td>
-                                    <td>{{ codigo }}</td>
-                                    <td>{{ estado }}</td>
+                                    <td>{{ name }}</td>
+                                    <td>{{ cargo }}</td>
+                                    <td>{{ email }}</td>
                                     <!-- <td>{{ jurisdiccion }}</td>
                                     <td>{{ municipio }}</td> -->
-                                    <td>{{ unidad }}</td>
-                                    <td>{{ clues }}</td>
+                                    <td>{{ movil }}</td>
+                                    <td>{{ fijo }}</td>
                                     <td>
-                                        <form action="/administrador/asignacion" method="GET">
+                                        <form action="/administrador/responsables/modificar" method="GET">
                                             <button name="codigoTable" class="btn" value="{{ codigo }}"><i class="fa fa-home"></i></button>
                                         </form>
                                     </td>

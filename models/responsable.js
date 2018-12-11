@@ -10,7 +10,7 @@ var ResponsableSchema = mongoose.Schema({
     name: {
         type: String
     },
-    puesto: {
+    cargo: {
         type: String
     },
     email: {
@@ -26,3 +26,12 @@ var ResponsableSchema = mongoose.Schema({
 
 // Apartado de directorio /routes
 var Responsable = module.exports = mongoose.model('Responsable', ResponsableSchema);
+
+module.exports.createResponsable = function(arr, callback) {
+    Responsable.insertMany(arr, callback);
+}
+
+module.exports.getAllAdmin = function(query, callback) {
+    console.log(query);
+    Responsable.find(query, callback);
+}

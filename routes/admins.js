@@ -4,7 +4,7 @@ const MongoClient = require('mongodb').MongoClient;
 const url = "mongodb://mongodb:FundacionCSMongoDB@127.0.0.1:27017/system_admin"
 
 const Admins = require('../models/admin');
-const Responsables = require('../models/responsable');
+const Responsable = require('../models/responsable');
 
 router.get('/', ensureAuthenticated, (req, res) => {
 
@@ -94,32 +94,75 @@ router.post('/asignacion', ensureAuthenticated, (req, res) => {
 
 router.get('/configuracion/:id', ensureAuthenticated, (req, res) => {
     var params = req.params;
-    console.log("params: " + params);
 
     var codigo_clear = params.id;
+    console.log("params: " + codigo_clear);
 
-    Admins.searchCode({ codigo: codigo_clear }, (err, result) => {
-        if (err) throw err;
-        console.log('Código encontrado');
-        console.log(result);
-        console.log(result[0].unidad);
-        var unidad_content = result[0].unidad;
-        if (unidad_content === null) {
-            // Cámara de frío
-            res.render('configuracion-cf');
-        } else {
-            // Refrigerador
-            res.render('configuracion-refrigerador');
-        }
-    });
+    var id = req.url;
+    console.log(id);
+    var configuracion = id.replace('/configuracion/'+codigo_clear+'?configOption=', '');
+    var len_config = configuracion.length;
+    console.log("config: " + configuracion);
+    console.log("config len: " + len_config);
+
+    if(len_config > 2){
+        Admins.searchCode({ codigo: codigo_clear }, (err, result) => {
+            if (err) throw err;
+            console.log('Código encontrado');
+            console.log(result);
+            console.log(result[0].unidad);
+            var unidad_content = result[0].unidad;
+            if (unidad_content === null) {
+                // Cámara de frío
+                res.render('configuracion-cf', { codigos: codigo_clear });
+            } else {
+                // Refrigerador
+                res.render('configuracion-refrigerador', { codigos: codigo_clear });
+            }
+        });
+   } else{
+        MongoClient.connect(url, function(err, client) {
+            if (err) throw err;
+            var dbo = client.db("system_admin");
+    
+            var myquery = { codigo: codigo_clear };
+            var newvalues = { $set: { config: configuracion } };
+    
+            dbo.collection("devices").updateOne(myquery, newvalues, function(err, result) {
+                if (err) throw err;
+                else {
+                    console.log(result);
+                    res.redirect('/administrador');
+                }
+            });
+            client.close();
+        });
+    }
+
 });
+
 
 router.get('/responsables', ensureAuthenticated, (req, res) => {
     var id = req.url;
     console.log(id);
     var codigo = id.replace('/responsables?codigoTable=', '');
 
-    res.render('responsables', { codigos: codigo });
+    Responsable.getAllAdmin({}, (err, data) => {
+        if (err) throw err;
+        console.log(data);
+
+        res.render('responsables', { codigos: codigo, datas: data });
+
+    });
+
+});
+
+router.post('/responsables', ensureAuthenticated, (req, res) => {
+    var url = req.url;
+    console.log('url: '+url);
+
+    var body = req.body;
+    console.log('body: '+body)
 
 });
 
@@ -129,6 +172,64 @@ router.get('/responsables/agregar', ensureAuthenticated, (req, res) => {
     var codigo = id.replace('/responsables/agregar?codigoTable=', '');
 
     res.render('register_respon', { codigos: codigo });
+
+});
+
+router.post('/responsables/agregar', ensureAuthenticated, (req, res) => {
+    var id = req.body;
+    console.log(id);
+
+    var codigo = id.codigoTable;
+    var name = id.name;
+    var cargo = id.cargo;
+    var email = id.email;
+    var movil = id.movil;
+    var fijo = id.fijo;
+
+    // Validación
+    req.checkBody('name', 'Nombre es requerido').notEmpty();
+    req.checkBody('cargo', 'Cargo es requerido').notEmpty();
+    req.checkBody('email', 'Email es requerido').notEmpty();
+    req.checkBody('email', 'Email no valido').notEmpty();
+    req.checkBody('movil', 'Número móvil es requerido').notEmpty();
+    req.checkBody('fijo', 'Número fijo es requerido').notEmpty();
+
+    var errors = req.validationErrors();
+
+    console.log(errors);
+
+    // Si hay errores muestralos en el layout
+    if (errors) {
+        res.render('register_respon', {
+            errors: errors
+        });
+    } else {
+        const newResponsable = new Responsable ({
+            codigo: codigo,
+            name: name,
+            cargo: cargo,
+            email: email,
+            movil: movil,
+            fijo: fijo
+        });
+
+        Responsable.createResponsable(newResponsable, (err, responsable) => {
+            if (err) throw err;
+            console.log(responsable);
+        });
+
+        req.flash('success_msg', 'Registro éxitoso');
+        res.redirect('/administrador/responsables?codigoTable='+codigo);
+    }
+
+});
+
+router.get('/responsables/modificar', ensureAuthenticated, (req, res) => {
+    var id = req.url;
+    console.log(id);
+    var codigo = id.replace('/responsables/modificar?codigoTable=', '');
+
+    res.render('modify_respon', { codigos: codigo });
 
 });
 

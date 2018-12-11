@@ -9,6 +9,7 @@
     "author": "Oscar Martín Arcos Román",
     "license": "ISC",
     "dependencies": {
+        "@material/card": "^0.42.0",
         "bcryptjs": "*",
         "body-parser": "*",
         "connect-flash": "*",
