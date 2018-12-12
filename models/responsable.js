@@ -10,6 +10,9 @@ var ResponsableSchema = mongoose.Schema({
     name: {
         type: String
     },
+    username: {
+        type: String
+    },
     cargo: {
         type: String
     },
@@ -36,7 +39,7 @@ module.exports.getAllResponsable = function(query, callback) {
     Responsable.find(query, callback);
 }
 
-module.exports.searchCode = function(query, callback) {
+module.exports.searchResponsable = function(query, callback) {
     console.log(query);
     Responsable.find(query, callback);
 }

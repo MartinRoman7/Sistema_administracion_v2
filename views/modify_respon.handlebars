@@ -1,5 +1,5 @@
 <div class="bottom-buffer" style="margin-left: 8px; margin-top: 70px;">
-    <h2>Modificación de responsable</h2>
+    <h2>Modificación de responsable {{ usernames }}</h2>
 </div>
 
 {{#each datas}}
@@ -15,13 +15,19 @@
 
     <div class="form-group">
         <div>
+            <input class="form-control" id="username" placeholder="Username" type="text" name="cargo" size="25" value="{{ username }}" autocomplete="off" style="border-color: rgb(204, 204, 204);" disabled>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div>
             <input class="form-control" id="cargo" placeholder="Cargo" type="text" name="cargo" size="25" value="{{ cargo }}" autocomplete="off" style="border-color: rgb(204, 204, 204);">
         </div>
     </div>
 
     <div class="form-group">
         <div>
-            <input class="form-control" id="email" placeholder="{{ email }}" type="email" name="email" size="25" value="{{ email }}" autocomplete="off" style="border-color: rgb(204, 204, 204);" disabled >
+            <input class="form-control" id="email" placeholder="{{ email }}" type="email" name="email" size="25" value="{{ email }}" autocomplete="off" style="border-color: rgb(204, 204, 204);">
         </div>
     </div>
 
@@ -37,9 +43,12 @@
         </div>
     </div>
 
+    <input class="form-control" id="codigo" type="hidden" name="codigo" size="25" value="{{ codigo }}">
+
+
     <div class="clearfix">
         <div class="pull-right">
-            <button name="emailResponsable" class="btn btn-success" value="{{ email }}">Aceptar</button>
+            <button name="usernameResponsable" class="btn btn-success" value="{{ username }}">Aceptar</button>
         </div>
     </div>
 

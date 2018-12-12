@@ -145,14 +145,12 @@ router.get('/configuracion/:id', ensureAuthenticated, (req, res) => {
 router.get('/responsables', ensureAuthenticated, (req, res) => {
     var id = req.url;
     console.log(id);
-    var codigo = id.replace('/responsables?codigoTable=', '');
+    var codigo_clear = id.replace('/responsables?codigoTable=', '');
 
-    Responsable.getAllResponsable({}, (err, data) => {
+    Responsable.searchResponsable({ codigo: codigo_clear }, (err, data) => {
         if (err) throw err;
-        console.log(data);
-
-        res.render('responsables', { codigos: codigo, datas: data });
-
+        console.log('Código encontrado');
+        res.render('responsables', { codigos: codigo_clear, datas: data });
     });
 
 });
@@ -181,6 +179,7 @@ router.post('/responsables/agregar', ensureAuthenticated, (req, res) => {
 
     var codigo = id.codigoTable;
     var name = id.name;
+    var username = id.username;
     var cargo = id.cargo;
     var email = id.email;
     var movil = id.movil;
@@ -188,6 +187,7 @@ router.post('/responsables/agregar', ensureAuthenticated, (req, res) => {
 
     // Validación
     req.checkBody('name', 'Nombre es requerido').notEmpty();
+    req.checkBody('username', 'Username es requerido').notEmpty();
     req.checkBody('cargo', 'Cargo es requerido').notEmpty();
     req.checkBody('email', 'Email es requerido').notEmpty();
     req.checkBody('email', 'Email no valido').notEmpty();
@@ -207,6 +207,7 @@ router.post('/responsables/agregar', ensureAuthenticated, (req, res) => {
         const newResponsable = new Responsable ({
             codigo: codigo,
             name: name,
+            username, username,
             cargo: cargo,
             email: email,
             movil: movil,
@@ -227,13 +228,13 @@ router.post('/responsables/agregar', ensureAuthenticated, (req, res) => {
 router.get('/responsables/modificar', ensureAuthenticated, (req, res) => {
     var id = req.url;
     console.log(id);
-    var email_clear = id.replace('/responsables/modificar?emailResponsable=', '').replace('%40','@');
+    var username_clear = id.replace('/responsables/modificar?usernameResponsable=', '');
 
 
-    Responsable.searchCode({ email: email_clear }, (err, data) => {
+    Responsable.searchResponsable({ username: username_clear }, (err, data) => {
         if (err) throw err;
-        console.log('Código encontrado');
-        res.render('modify_respon', { datas: data });
+        console.log('Username encontrado');
+        res.render('modify_respon', { usernames: username_clear ,datas: data });
     });
 
 });
@@ -247,19 +248,22 @@ router.post('/responsables/modificar', ensureAuthenticated, (req, res) => {
     let cargo = body.cargo;
     let movil = body.movil;
     let fijo = body.fijo;
-    let email= body.emailResponsable;
+    let email = body.email;
+    let codigo = body.codigo;
+    let username= body.usernameResponsable;
     
     MongoClient.connect(url, function(err, client) {
         if (err) throw err;
         var dbo = client.db("system_admin");
 
-        var myquery = { email: email };
-        var newvalues = { $set: { name: name, cargo: cargo, movil: movil, fijo: fijo } };
+        var myquery = { username: username };
+        var newvalues = { $set: { name: name, cargo: cargo, email: email, movil: movil, fijo: fijo } };
 
         dbo.collection("responsables").updateOne(myquery, newvalues, function(err, result) {
             if (err) throw err;
             console.log(result);
-            res.redirect('/administrador');
+            req.flash('success_msg', 'Registro éxitoso');
+            res.redirect('/administrador/responsables?codigoTable='+codigo);
             
         });
         client.close();
