@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-var Device = require("./qrcode");
+var Device = require("./device");
 
 module.exports.getAllAdmin = function(query, callback) {
     console.log(query);

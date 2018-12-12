@@ -6,7 +6,7 @@ webhookUri = "https://hooks.slack.com/services/TC7BK7NBB/BDNKQLLLA/P34LGmgGzmgwM
 slack = new Slack();
 slack.setWebhook(webhookUri);
 
-const Device = require('../models/qrcode');
+const Device = require('../models/device');
 
 router.get('/', ensureAuthenticated, (req, res) => {
   res.render('qrcode');

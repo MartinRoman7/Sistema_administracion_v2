@@ -227,7 +227,7 @@ router.post('/responsables/agregar', ensureAuthenticated, (req, res) => {
 router.get('/responsables/modificar', ensureAuthenticated, (req, res) => {
     var id = req.url;
     console.log(id);
-    var email_clear = id.replace('/responsables/modificar?emailemaeResponsable=', '');
+    var email_clear = id.replace('/responsables/modificar?emailResponsable=', '').replace('%40','@');
 
 
     Responsable.searchCode({ email: email_clear }, (err, data) => {
