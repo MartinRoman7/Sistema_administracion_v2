@@ -58,19 +58,31 @@ router.post('/registro', ensureAuthenticated, (req, res) => {
             password: password
         });
 
-        User.createUser(newUser, (err, user) => {
+
+        User.searchCode({ email: email }, (err, result) => {
             if (err) throw err;
-            console.log(user);
-        });
+            if (result.length) {
+                errors=[{msg:'Email ya registrado'}];
+                console.log('Email encontrado');
+                res.render('register', { errors: errors });
+            } else {
 
-        req.flash('success_msg', 'Registro éxitoso');
-        res.redirect('/users/login');
+                User.createUser(newUser, (err, user) => {
+                    if (err) throw err;
+                    console.log(user);
+                });
+        
+                req.flash('success_msg', 'Registro éxitoso');
+                res.redirect('/users/login');
+        
+                slack.webhook({
+                    channel: "aws-iot-fundacion",
+                    text: "El usuario " + name + " se ha registrado en la base de datos.",
+                }, function(err, response) {
+                    console.log(response);
+                });
 
-        slack.webhook({
-            channel: "aws-iot-fundacion",
-            text: "El usuario " + name + " se ha registrado en la base de datos.",
-        }, function(err, response) {
-            console.log(response);
+            }
         });
 
     }

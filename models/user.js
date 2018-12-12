@@ -47,3 +47,8 @@ module.exports.comparePassword = function(candidatePassword, hash, callback) {
         callback(null, isMatch);
     });
 }
+
+module.exports.searchCode = function(query, callback) {
+    console.log(query);
+    User.find(query, callback);
+}

@@ -1,47 +1,51 @@
 <div class="bottom-buffer" style="margin-left: 8px; margin-top: 70px;">
-    <h2>Modificación de responsable de {{ codigos }}</h2>
+    <h2>Modificación de responsable</h2>
 </div>
 
-<form role="form" action="/administrador/responsables/agregar" method="POST">
+{{#each datas}}
+
+<form role="form" action="/administrador/responsables/modificar" method="POST">
 
     <div class="form-group" style="margin-top: 30px;">
         <div>
             <!-- <input class="form-control" id="name" placeholder="Nombre completo" type="text" name="name" size="25" value="" onblur="javascript:this.value = this.value.toUpperCase();" autocomplete="off" style="border-color: rgb(204, 204, 204);"> -->
-            <input class="form-control" id="name" placeholder="Nombre" type="text" name="name" size="25" value="" autocomplete="off" style="border-color: rgb(204, 204, 204);">
+            <input class="form-control" id="name" placeholder="Nombre" type="text" name="name" size="25" value="{{ name }}" autocomplete="off" style="border-color: rgb(204, 204, 204);">
         </div>
     </div>
 
     <div class="form-group">
         <div>
-            <input class="form-control" id="cargo" placeholder="Cargo" type="text" name="cargo" size="25" value="" autocomplete="off" style="border-color: rgb(204, 204, 204);">
+            <input class="form-control" id="cargo" placeholder="Cargo" type="text" name="cargo" size="25" value="{{ cargo }}" autocomplete="off" style="border-color: rgb(204, 204, 204);">
         </div>
     </div>
 
     <div class="form-group">
         <div>
-            <input class="form-control" id="email" placeholder="E-Mail" type="email" name="email" size="25" value="" autocomplete="off" style="border-color: rgb(204, 204, 204);">
+            <input class="form-control" id="email" placeholder="{{ email }}" type="email" name="email" size="25" value="{{ email }}" autocomplete="off" style="border-color: rgb(204, 204, 204);" disabled >
         </div>
     </div>
 
     <div class="form-group">
         <div>
-            <input class="form-control" id="movil" placeholder="Teléfono móvil" type="tel" name="movil" size="25" autocomplete="off" style="border-color: rgb(204, 204, 204);">
+            <input class="form-control" id="movil" placeholder="Teléfono móvil" type="tel" name="movil" size="25" value="{{ movil }}" autocomplete="off" style="border-color: rgb(204, 204, 204);">
         </div>
     </div>
 
     <div class="form-group">
         <div>
-            <input class="form-control" id="fijo" placeholder="Teléfono fijo" type="tel" name="fijo" size="25" autocomplete="off" style="border-color: rgb(204, 204, 204);">
+            <input class="form-control" id="fijo" placeholder="Teléfono fijo" type="tel" name="fijo" size="25" value="{{ fijo }}" autocomplete="off" style="border-color: rgb(204, 204, 204);">
         </div>
     </div>
 
     <div class="clearfix">
         <div class="pull-right">
-            <button name="codigoTable" class="btn btn-success" value="{{ codigos }}">Aceptar</button>
+            <button name="emailResponsable" class="btn btn-success" value="{{ email }}">Aceptar</button>
         </div>
     </div>
 
 </form>
+
+{{/each}}
 
 <div class="row" id="divMsgError" style="margin-top: 20px;">
         <div class="col-xs-6 col-sm-12 col-lg-12">

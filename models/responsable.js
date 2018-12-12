@@ -31,7 +31,12 @@ module.exports.createResponsable = function(arr, callback) {
     Responsable.insertMany(arr, callback);
 }
 
-module.exports.getAllAdmin = function(query, callback) {
+module.exports.getAllResponsable = function(query, callback) {
+    console.log(query);
+    Responsable.find(query, callback);
+}
+
+module.exports.searchCode = function(query, callback) {
     console.log(query);
     Responsable.find(query, callback);
 }

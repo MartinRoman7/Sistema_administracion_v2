@@ -24,7 +24,7 @@ var db = mongoose.connection;
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
-var qrcodes = require('./routes/qrcodes');
+var devices = require('./routes/devices');
 var administradores = require('./routes/admins');
 var apis = require('./routes/apis');
 var manuals = require('./routes/manuals');
@@ -90,7 +90,7 @@ app.use(function(req, res, next) {
 
 app.use('/', routes);
 app.use('/users', users);
-app.use('/qrcodes', qrcodes);
+app.use('/qrcodes', devices);
 app.use('/administrador', administradores);
 app.use('/api/v1', apis);
 app.use('/manuales', manuals);

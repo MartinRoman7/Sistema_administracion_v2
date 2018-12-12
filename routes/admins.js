@@ -147,7 +147,7 @@ router.get('/responsables', ensureAuthenticated, (req, res) => {
     console.log(id);
     var codigo = id.replace('/responsables?codigoTable=', '');
 
-    Responsable.getAllAdmin({}, (err, data) => {
+    Responsable.getAllResponsable({}, (err, data) => {
         if (err) throw err;
         console.log(data);
 
@@ -227,9 +227,43 @@ router.post('/responsables/agregar', ensureAuthenticated, (req, res) => {
 router.get('/responsables/modificar', ensureAuthenticated, (req, res) => {
     var id = req.url;
     console.log(id);
-    var codigo = id.replace('/responsables/modificar?codigoTable=', '');
+    var email_clear = id.replace('/responsables/modificar?emailemaeResponsable=', '');
 
-    res.render('modify_respon', { codigos: codigo });
+
+    Responsable.searchCode({ email: email_clear }, (err, data) => {
+        if (err) throw err;
+        console.log('Código encontrado');
+        res.render('modify_respon', { datas: data });
+    });
+
+});
+
+router.post('/responsables/modificar', ensureAuthenticated, (req, res) => {
+    let body = req.body;
+    console.log(body);
+
+    // Agregar apartado de cámara de frío
+    let name = body.name;
+    let cargo = body.cargo;
+    let movil = body.movil;
+    let fijo = body.fijo;
+    let email= body.emailResponsable;
+    
+    MongoClient.connect(url, function(err, client) {
+        if (err) throw err;
+        var dbo = client.db("system_admin");
+
+        var myquery = { email: email };
+        var newvalues = { $set: { name: name, cargo: cargo, movil: movil, fijo: fijo } };
+
+        dbo.collection("responsables").updateOne(myquery, newvalues, function(err, result) {
+            if (err) throw err;
+            console.log(result);
+            res.redirect('/administrador');
+            
+        });
+        client.close();
+    });
 
 });
 
