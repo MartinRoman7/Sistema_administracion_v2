@@ -262,7 +262,7 @@ router.post('/responsables/modificar', ensureAuthenticated, (req, res) => {
         dbo.collection("responsables").updateOne(myquery, newvalues, function(err, result) {
             if (err) throw err;
             console.log(result);
-            req.flash('success_msg', 'Registro éxitoso');
+            req.flash('success_msg', 'Modificaci�n éxitoa');
             res.redirect('/administrador/responsables?codigoTable='+codigo);
             
         });

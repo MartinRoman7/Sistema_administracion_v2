@@ -2,9 +2,32 @@
     <ol id="breadcrumb" class="breadcrumb" hidden style="margin-left: 8px;"></ol>
     <div class="row">
         <div class="col-xs-6 col-sm-12 col-lg-12">
-            <video id="preview" width="100%"></video>
-            <script type="text/javascript" src="/js/video.js"></script>
-        </div>
+            
+	    <div style="margin-top: 30px; margin-right: 25px;">
+                <button type="button" class="btn btn-info" id="startButton">Encender</button>
+                <button type="button" class="btn btn-info" id="resetButton">Apagar</button>
+            </div>
+	   
+	    <div class="bottom-buffer" style="margin-left: 50px; margin-top: 15px; margin-right: 50px;">
+ 
+  	    <video id="video" width="100%" style="border: 3px solid gray"></video>
+	    
+	    <div id="sourceSelectPanel" style="display:none; margin-top: 15px;">
+                <label for="sourceSelect"><strong>Seleccione camara</strong></label>
+                <select id="sourceSelect" style="max-width:400px">
+                </select>
+            </div>
+	    <div style="margin-top: 10px;">
+            	<label><strong>Codigo detectado</strong></label>
+            	<blockquote>
+                    <p id="result"></p>
+            	</blockquote>
+            </div>
+
+	    <script type="text/javascript" src="/js/video.js"></script>
+    	
+	    </div>
+	</div>
     </div>
 </div>
 
