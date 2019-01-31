@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const MongoClient = require('mongodb').MongoClient;
-const url = "mongodb://mongodb:FundacionCSMongoDB@127.0.0.1:27017/system_admin"
+const url = "mongodb://<Usuario de mongo>:<Contraseña de mongo>@127.0.0.1:27017/<Nombre de DB>"
 
 const Admins = require('../models/admin');
 const Responsable = require('../models/responsable');
@@ -23,7 +23,7 @@ router.post('/search', ensureAuthenticated, (req, res) => {
     Admins.searchCode({ codigo: codigo_clear }, (err, result) => {
         if (err) throw err;
         if (result.length) {
-            console.log('Código encontrado');
+            console.log('CÃ³digo encontrado');
             res.render('admin', { datas: result });
         } else {
 
@@ -31,7 +31,7 @@ router.post('/search', ensureAuthenticated, (req, res) => {
                 if (err) throw err;
                 console.log(data);
                 var errors_arr = [];
-                errors_arr.push({ msg: 'No existe código en la DB' });
+                errors_arr.push({ msg: 'No existe cÃ³digo en la DB' });
                 var errors = JSON.stringify(errors_arr);
 
                 res.render('admin', { datas: data, errors: errors });
@@ -64,7 +64,7 @@ router.post('/asignacion', ensureAuthenticated, (req, res) => {
     let body = req.body;
     console.log(body);
 
-    // Agregar apartado de cámara de frío
+    // Agregar apartado de cÃ¡mara de frÃ­o
     let estado = body.estado;
     let municipio = body.municipio;
     let jurisdiccion = body.jurisdiccion;
@@ -108,12 +108,12 @@ router.get('/configuracion/:id', ensureAuthenticated, (req, res) => {
     if(len_config > 2){
         Admins.searchCode({ codigo: codigo_clear }, (err, result) => {
             if (err) throw err;
-            console.log('Código encontrado');
+            console.log('CÃ³digo encontrado');
             console.log(result);
             console.log(result[0].unidad);
             var unidad_content = result[0].unidad;
             if (unidad_content === null) {
-                // Cámara de frío
+                // CÃ¡mara de frÃ­o
                 res.render('configuracion-cf', { codigos: codigo_clear });
             } else {
                 // Refrigerador
@@ -149,7 +149,7 @@ router.get('/responsables', ensureAuthenticated, (req, res) => {
 
     Responsable.searchResponsable({ codigo: codigo_clear }, (err, data) => {
         if (err) throw err;
-        console.log('Código encontrado');
+        console.log('CÃ³digo encontrado');
         res.render('responsables', { codigos: codigo_clear, datas: data });
     });
 
@@ -185,14 +185,14 @@ router.post('/responsables/agregar', ensureAuthenticated, (req, res) => {
     var movil = id.movil;
     var fijo = id.fijo;
 
-    // Validación
+    // ValidaciÃ³n
     req.checkBody('name', 'Nombre es requerido').notEmpty();
     req.checkBody('username', 'Username es requerido').notEmpty();
     req.checkBody('cargo', 'Cargo es requerido').notEmpty();
     req.checkBody('email', 'Email es requerido').notEmpty();
     req.checkBody('email', 'Email no valido').notEmpty();
-    req.checkBody('movil', 'Número móvil es requerido').notEmpty();
-    req.checkBody('fijo', 'Número fijo es requerido').notEmpty();
+    req.checkBody('movil', 'NÃºmero mÃ³vil es requerido').notEmpty();
+    req.checkBody('fijo', 'NÃºmero fijo es requerido').notEmpty();
 
     var errors = req.validationErrors();
 
@@ -219,7 +219,7 @@ router.post('/responsables/agregar', ensureAuthenticated, (req, res) => {
             console.log(responsable);
         });
 
-        req.flash('success_msg', 'Registro éxitoso');
+        req.flash('success_msg', 'Registro Ã©xitoso');
         res.redirect('/administrador/responsables?codigoTable='+codigo);
     }
 
@@ -243,7 +243,7 @@ router.post('/responsables/modificar', ensureAuthenticated, (req, res) => {
     let body = req.body;
     console.log(body);
 
-    // Agregar apartado de cámara de frío
+    // Agregar apartado de cÃ¡mara de frÃ­o
     let name = body.name;
     let cargo = body.cargo;
     let movil = body.movil;
@@ -262,7 +262,7 @@ router.post('/responsables/modificar', ensureAuthenticated, (req, res) => {
         dbo.collection("responsables").updateOne(myquery, newvalues, function(err, result) {
             if (err) throw err;
             console.log(result);
-            req.flash('success_msg', 'Modificaci�n éxitoa');
+            req.flash('success_msg', 'ModificaciÃn Ã©xitoa');
             res.redirect('/administrador/responsables?codigoTable='+codigo);
             
         });
