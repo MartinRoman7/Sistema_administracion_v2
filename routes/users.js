@@ -4,7 +4,7 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const Slack = require('slack-node');
 
-webhookUri = "https://hooks.slack.com/services/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";
+webhookUri = "<Webhook de Slack>";
 slack = new Slack();
 slack.setWebhook(webhookUri);
 
