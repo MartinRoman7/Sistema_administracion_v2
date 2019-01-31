@@ -13,12 +13,11 @@ var mongoose = require('mongoose');
 var Slack = require('slack-node');
 
 // Notificaciones Slack
-webhookUri = "https://hooks.slack.com/services/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";
+webhookUri = "<Webhook de slack>";
 slack = new Slack();
 slack.setWebhook(webhookUri);
 
-//mongoose.connect('mongodb://mongodb:FundacionCSMongoDB@138.68.47.27:27017/system_admin', { useNewUrlParser: true });
-mongoose.connect('mongodb://mongodb:FundacionCSMongoDB@127.0.0.1:27017/system_admin', { useNewUrlParser: true });
+mongoose.connect('mongodb://<Usuario de mongo>:<Contraseña de mongo>@127.0.0.1:27017/<Nombre de DB>', { useNewUrlParser: true });
 mongoose.set('useCreateIndex', true);
 var db = mongoose.connection;
 
