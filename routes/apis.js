@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const MongoClient = require('mongodb').MongoClient;
-const url = "mongodb://mongodb:FundacionCSMongoDB@localhost:27017/system_admin"
+const url = "mongodb://<Usuario de mongo>:<Contraseña de mongo>@localhost:27017/<Nombre de DB>"
 
 
 // Estado - Jurisdicción
